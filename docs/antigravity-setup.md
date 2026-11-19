@@ -6,7 +6,7 @@ The `agent-skills` package can be installed as a native plugin in the Antigravit
 
 ### Option 1: Native Plugin Installation (Recommended)
 
-Antigravity CLI has a first-class [plugin system](https://www.agy.dev/docs/plugins/) that registers skills and agents. The repository also carries legacy command TOMLs, but affected `agy` releases do not expose their converted wrappers; see [Lifecycle Workflows and Command Compatibility](#lifecycle-workflows-and-command-compatibility).
+Antigravity CLI has a [plugin system](https://www.agy.dev/docs/plugins/) that registers skills and agents. The lifecycle workflows are now skills in `skills/`; use the skills directly rather than relying on legacy command TOMLs.
 
 **Install from the remote repository:**
 
@@ -43,26 +43,25 @@ agy plugin list
 
 ---
 
-## Lifecycle Workflows and Command Compatibility
+## Lifecycle Skills
 
-Antigravity's [migration tooling](https://www.agy.dev/docs/cli/gcli-migration/) reports the 10 legacy definitions in `commands/*.toml` as "converted to skills." In affected `agy` 1.1.x releases, validation succeeds but the converted wrappers do not appear in the slash-command or skill catalog. A successful `agy plugin validate` therefore confirms the files are well formed, not that `/build` and the other short wrappers are available. This is tracked in [agent-skills #445](https://github.com/addyosmani/agent-skills/issues/445) and upstream in [antigravity-cli #788](https://github.com/google-antigravity/antigravity-cli/issues/788).
+The ten lifecycle workflows are installed as skills. Invoke them from the plugin's namespaced skill catalog:
 
-Use the native plugin skills directly while that importer limitation applies:
+| Workflow | Skill |
+|----------|-------|
+| Define | `/agent-skills:spec` |
+| Plan | `/agent-skills:plan` |
+| Build | `/agent-skills:build` |
+| Verify | `/agent-skills:test` |
+| Review | `/agent-skills:review` |
+| Simplify | `/agent-skills:code-simplify` |
+| Ship | `/agent-skills:ship` |
+| Constraints | `/agent-skills:constraints` |
+| Web performance | `/agent-skills:webperf` |
+| Accessibility | `/agent-skills:a11y` |
 
-| Intended wrapper | Direct Antigravity invocation | Notes |
-|------------------|-------------------------------|-------|
-| `/spec` | `/agent-skills:spec-driven-development` | Writes a structured spec before code |
-| `/constraints` | `/agent-skills:constraint-driven-development` | Defines and enforces the project's quality bar |
-| `/planning` | `/agent-skills:planning-and-task-breakdown` | Antigravity's built-in `/planning` command is a separate plan-mode control |
-| `/build` | `/agent-skills:incremental-implementation` | Also invoke `/agent-skills:test-driven-development`; wrapper-only `/build auto` orchestration is unavailable |
-| `/test` | `/agent-skills:test-driven-development` | Runs the red-green-refactor workflow |
-| `/review` | `/agent-skills:code-review-and-quality` | Runs the five-axis review workflow |
-| `/code-simplify` | `/agent-skills:code-simplification` | Simplifies without changing behavior |
-| `/ship` | `/agent-skills:shipping-and-launch` | The wrapper's automatic persona fan-out is unavailable; invoke specialist agents separately |
-| `/webperf` | Select `web-performance-auditor` from `/agents` | This workflow is a persona, not a skill |
-| `/a11y` | `/agent-skills:accessibility-engineering` | Audits an interface for WCAG 2.2 AA and remediates the violations found |
+Antigravity may reserve names for built-in commands, and skill invocation/catalog behavior can differ by release. Check `/skills` in the active session; if a short name conflicts or does not resolve, ask for the workflow by name in natural language.
 
-Do not add YAML frontmatter to the TOML files as a workaround. Gemini CLI reads the parallel TOML command format with a strict parser, and `---` frontmatter makes those files invalid TOML without changing Antigravity's conversion behavior.
 
 ---
 
@@ -81,7 +80,7 @@ To validate that your local plugin is correctly structured and contains all skil
 agy plugin validate /path/to/agent-skills
 ```
 
-Then start a fresh session and type `/agent-skills:` to inspect the namespaced skill catalog. If the validator reports that commands were converted but `/build` returns `No matches`, use the direct invocations above; reinstalling or adding a TOML `name` field does not resolve the known importer limitation.
+Then start a fresh session and inspect `/agent-skills:` in the skill catalog. Plugin validation checks structure; it does not guarantee every skill appears or that a short invocation is available in every release.
 
 ---
 

@@ -1,0 +1,15 @@
+{
+  "skill_name": "build",
+  "trigger": {
+    "positive": [
+      { "prompt": "Invoke `/build`.", "top_k": 1 },
+      { "prompt": "Use the `build` skill.", "top_k": 1 },
+      { "prompt": "Run the short `build` workflow.", "top_k": 1 }
+    ],
+    "negative": [
+      { "prompt": "Run `/plan` for this spec.", "owner": "plan" },
+      { "prompt": "Run `/review` for these changes.", "owner": "review" }
+    ]
+  },
+  "evals": [{ "id": 1, "kind": "dialogue", "prompt": "Run `/build` for the next approved task in the plan.", "expected_output": "A bounded, test-driven implementation of the next task", "expectations": ["Selects one pending task and respects its acceptance criteria", "Follows the required test-first verification workflow", "Does not silently execute unrelated tasks"] }]
+}

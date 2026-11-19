@@ -1,0 +1,15 @@
+{
+  "skill_name": "spec",
+  "trigger": {
+    "positive": [
+      { "prompt": "Invoke `/spec`.", "top_k": 1 },
+      { "prompt": "Use the `spec` skill.", "top_k": 1 },
+      { "prompt": "Run the short `spec` workflow.", "top_k": 1 }
+    ],
+    "negative": [
+      { "prompt": "Run `/plan` for the approved specification.", "owner": "plan" },
+      { "prompt": "Run `/build` for the next task.", "owner": "build" }
+    ]
+  },
+  "evals": [{ "id": 1, "kind": "dialogue", "prompt": "Run `/spec` to define requirements for our new billing capability.", "expected_output": "A structured specification process that clarifies requirements and boundaries before coding", "expectations": ["Checks whether an existing specification governs the request", "Surfaces unresolved requirements instead of inventing them", "Does not implement code before the specification is confirmed"] }]
+}

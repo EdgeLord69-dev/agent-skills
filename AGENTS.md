@@ -32,11 +32,9 @@ The agent should automatically map user intent to skills:
 - UI work → `frontend-ui-engineering`
 - Accessibility audit / a11y review → `accessibility-engineering`
 
-### Lifecycle Mapping (Implicit Commands)
+### Lifecycle Mapping
 
-OpenCode does not support slash commands like `/spec` or `/plan`.
-
-Instead, the agent must internally follow this lifecycle:
+Invoke the short workflow skills explicitly or select the appropriate specialist skill for the task:
 
 - DEFINE → `spec-driven-development`
 - PLAN → `planning-and-task-breakdown`
@@ -68,17 +66,16 @@ Correct behavior:
 
 This ensures OpenCode behaves similarly to Claude Code with full workflow enforcement.
 
-## Orchestration: Personas, Skills, and Commands
+## Orchestration: Personas and Skills
 
-This repo has three composable layers. They have different jobs and should not be confused:
+This repo has two composable layers:
 
-- **Skills** (`skills/<name>/SKILL.md`) — workflows with steps and exit criteria. The *how*. Mandatory hops when an intent matches.
+- **Skills** (`skills/<name>/SKILL.md`) — workflows with steps and exit criteria. Short-named workflow skills are user-facing entry points.
 - **Personas** (`agents/<role>.md`) — roles with a perspective and an output format. The *who*.
-- **Slash commands** (`.claude/commands/*.md`) — user-facing entry points. The *when*. The orchestration layer.
 
-Composition rule: **the user (or a slash command) is the orchestrator. Personas do not invoke other personas.** A persona may invoke skills.
+Composition rule: **the user or a workflow skill is the orchestrator. Personas do not invoke other personas.** A persona may invoke skills.
 
-The only multi-persona orchestration pattern this repo endorses is **parallel fan-out with a merge step** — used by `/ship` to run `code-reviewer`, `security-auditor`, and `test-engineer` concurrently and synthesize their reports. Do not build a "router" persona that decides which other persona to call; that's the job of slash commands and intent mapping.
+The endorsed multi-persona pattern is **parallel fan-out with a merge step** — used by `/ship` to run `code-reviewer`, `security-auditor`, and `test-engineer` concurrently and synthesize their reports. Do not build a "router" persona that decides which other persona to call; that is the job of workflow skills and intent mapping.
 
 See [docs/agents.md](docs/agents.md) for the decision matrix and [references/orchestration-patterns.md](references/orchestration-patterns.md) for the full pattern catalog.
 

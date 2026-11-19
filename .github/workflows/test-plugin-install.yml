@@ -55,29 +55,6 @@ jobs:
       - name: Test session-start hook payload
         run: bash hooks/session-start-test.sh
 
-  validate-commands:
-    name: Validate command parity and description sync
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: '24'
-
-      - name: Validate commands across all tool directories
-        run: node scripts/validate-commands.js
-
-      - name: Test command validator
-        run: node --test scripts/validate-commands-test.js
-
-      - name: Validate spec/plan/todo artifact paths
-        run: node scripts/validate-artifact-paths.js
-
-      - name: Test artifact-path validator
-        run: node --test scripts/validate-artifact-paths-test.js
-
   # Ubuntu coverage stays in the existing jobs above, preserving their check names.
   validate-platforms:
     name: Validate tooling (${{ matrix.os }})
@@ -103,7 +80,6 @@ jobs:
           scripts/validate-versions-test.js
           scripts/run-evals-test.js
           scripts/validate-reference-links-test.js
-          scripts/validate-commands-test.js
           scripts/validate-artifact-paths-test.js
           scripts/floor-guard-reference-test.js
           scripts/quality-gate-test.js
@@ -118,8 +94,6 @@ jobs:
       - name: Validate references/ links in skills
         run: node scripts/validate-reference-links.js
 
-      - name: Validate commands across all tool directories
-        run: node scripts/validate-commands.js
 
       - name: Validate spec/plan/todo artifact paths
         run: node scripts/validate-artifact-paths.js
@@ -158,7 +132,7 @@ jobs:
 
   validate:
     name: Validate plugin structure
-    needs: [validate-skills, validate-commands, validate-platforms]
+    needs: [validate-skills, validate-platforms]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6

@@ -1,0 +1,15 @@
+{
+  "skill_name": "test",
+  "trigger": {
+    "positive": [
+      { "prompt": "Invoke `/test`.", "top_k": 1 },
+      { "prompt": "Use the `test` skill.", "top_k": 1 },
+      { "prompt": "Run the short `test` workflow.", "top_k": 1 }
+    ],
+    "negative": [
+      { "prompt": "Run `/build` for the next planned implementation task.", "owner": "build" },
+      { "prompt": "Run `/review` before merging this change.", "owner": "review" }
+    ]
+  },
+  "evals": [{ "id": 1, "kind": "dialogue", "prompt": "Run `/test` to fix this reported bug using TDD.", "expected_output": "A failing test reproducing the issue, then a minimal fix and regression verification", "expectations": ["Establishes the failing reproduction before changing implementation", "Uses the failure to guide the fix", "Verifies the repaired behavior and regressions"] }]
+}

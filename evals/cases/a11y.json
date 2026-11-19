@@ -1,0 +1,15 @@
+{
+  "skill_name": "a11y",
+  "trigger": {
+    "positive": [
+      { "prompt": "Invoke `/a11y`.", "top_k": 1 },
+      { "prompt": "Use the `a11y` skill.", "top_k": 1 },
+      { "prompt": "Run the short `a11y` workflow.", "top_k": 1 }
+    ],
+    "negative": [
+      { "prompt": "Run `/webperf` for this page.", "owner": "webperf" },
+      { "prompt": "Run `/review` for these changes.", "owner": "review" }
+    ]
+  },
+  "evals": [{ "id": 1, "kind": "dialogue", "prompt": "Run `/a11y` to audit the checkout form for accessibility problems.", "expected_output": "A WCAG-grounded accessibility audit with evidence-based findings and remediation", "expectations": ["Identifies applicable accessibility issues and maps findings to criteria", "Separates automated checks from manual assistive-technology verification", "Provides actionable remediation without claiming unverified results"] }]
+}

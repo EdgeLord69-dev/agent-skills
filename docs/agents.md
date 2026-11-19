@@ -10,17 +10,35 @@ Specialist personas that play a single role with a single perspective. Each pers
 | [web-performance-auditor](../agents/web-performance-auditor.md) | Web Performance Engineer | Core Web Vitals audit, loading/rendering/network analysis |
 | [accessibility-auditor](../agents/accessibility-auditor.md) | Accessibility Engineer | WCAG 2.2 AA conformance audit, keyboard and screen reader review, contrast |
 
-## How personas relate to skills and commands
+## How personas relate to skills
 
-Three layers, each with a distinct job:
+Two layers have distinct jobs:
 
 | Layer | What it is | Example | Composition role |
 |-------|-----------|---------|------------------|
-| **Skill** | A workflow with steps and exit criteria | `code-review-and-quality` | The *how* — invoked from inside a persona or command |
-| **Persona** | A role with a perspective and an output format | `code-reviewer` | The *who* — adopts a viewpoint, produces a report |
-| **Command** | A user-facing entry point | `/review`, `/ship` | The *when* — composes personas and skills |
+| **Skill** | A workflow with steps and exit criteria | `code-review-and-quality` | The *how* — invoked from inside a persona or by the user |
+| **Persona** | A role with a perspective and an output format | `code-reviewer` | The *who* — adopts a viewpoint and produces a report |
 
-The user (or a slash command) is the orchestrator. **Personas do not call other personas.** Skills are mandatory hops inside a persona's workflow.
+The user is the orchestrator. **Personas do not call other personas.** Skills can guide work inside a persona or be invoked directly by the user; they are not persona wrappers or a separate orchestration layer.
+
+## Workflow skills
+
+Use the relevant skill directly for a repeatable workflow:
+
+- `spec` → define requirements and scope
+- `plan` → break work into an actionable plan
+- `build` → implement planned changes
+- `test` → develop and verify tests
+- `review` → review changes
+- `ship` → coordinate review, security, and test perspectives, then synthesize a go/no-go decision
+- `constraints` → identify and apply quality-bar constraints
+- `code-simplify` → simplify working code without changing behavior
+- `webperf` → audit web performance
+- `a11y` → audit accessibility
+
+Skills are discoverable by the harness; invocation syntax varies by host. Use the skill by name or ask naturally for its workflow rather than assuming every host exposes slash commands.
+
+The workflow skills do not replace the specialist personas. For a focused report in a fresh context, invoke the relevant persona directly; `ship` is the workflow that composes `code-reviewer`, `security-auditor`, and `test-engineer` in parallel and merges their reports.
 
 ## When to use each
 
@@ -33,20 +51,12 @@ Pick this when you want one perspective on the current change and the user is in
 - "Audit Core Web Vitals on the product page" → invoke `web-performance-auditor` directly
 - "Is this page usable with a screen reader?" → invoke `accessibility-auditor` directly
 
-### Slash command (single persona behind it)
-Pick this when there's a repeatable workflow you'd otherwise re-explain every time.
+### Parallel fan-out with merge
+Use `ship` only when independent investigations can run in parallel and produce reports that a single agent then merges:
 
-- `/webperf` → wraps `web-performance-auditor` for performance-focused audits on web apps
-- `/a11y` → wraps `accessibility-auditor` for WCAG 2.2 AA audits
+- `ship` → fans out to `code-reviewer` + `security-auditor` + `test-engineer` in parallel, then synthesizes their reports into a go/no-go decision
 
-`/review` and `/test` are not persona wrappers. They run the `code-review-and-quality` and `test-driven-development` skills in the main session, where the conversation's context is. To get `code-reviewer` or `test-engineer` in a fresh context, invoke the persona directly or run `/ship`.
-
-### Slash command (orchestrator — fan-out)
-Pick this only when **independent** investigations can run in parallel and produce reports that a single agent then merges.
-
-- `/ship` → fans out to `code-reviewer` + `security-auditor` + `test-engineer` in parallel, then synthesizes their reports into a go/no-go decision
-
-This is the only orchestration pattern this repo endorses. See [references/orchestration-patterns.md](../references/orchestration-patterns.md) for the full pattern catalog and anti-patterns.
+This is the only multi-persona orchestration pattern this repo endorses. See [references/orchestration-patterns.md](../references/orchestration-patterns.md) for the full pattern catalog and anti-patterns.
 
 ## Decision matrix
 
@@ -54,16 +64,16 @@ This is the only orchestration pattern this repo endorses. See [references/orche
 Is the work a single perspective on a single artifact?
 ├── Yes → Direct persona invocation
 └── No  → Are the sub-tasks independent (no shared mutable state, no ordering)?
-         ├── Yes → Slash command with parallel fan-out (e.g. /ship)
-         └── No  → Sequential slash commands run by the user (/spec → /plan → /build → /test → /review)
+         ├── Yes → Use ship for parallel fan-out and merge
+         └── No  → User runs workflow skills in sequence (spec → plan → build → test → review → ship)
 ```
 
 ## Worked example: valid orchestration
 
-`/ship` is the canonical fan-out orchestrator in this repo:
+`ship` is the canonical fan-out workflow in this repo:
 
 ```
-/ship
+ship
   ├── (parallel) code-reviewer    → review report
   ├── (parallel) security-auditor → audit report
   └── (parallel) test-engineer    → coverage report
@@ -84,43 +94,44 @@ Why this works:
 A `meta-orchestrator` persona whose job is "decide which other persona to call":
 
 ```
-/work-on-pr → meta-orchestrator
+user request → meta-orchestrator
                   ↓ (decides "this needs a review")
               code-reviewer
                   ↓ (returns)
               meta-orchestrator (paraphrases result)
                   ↓
-              user
+                  user
 ```
 
 Why this fails:
 - Pure routing layer with no domain value
 - Adds two paraphrasing hops → information loss + 2× token cost
-- The user already knows they want a review; let them call `/review` directly
-- Replicates work that slash commands and `AGENTS.md` intent-mapping already do
+- The user already knows they want a review; let them invoke the workflow skill or persona
+- Replicates work that skill discovery and `AGENTS.md` intent-mapping already do
 
 ## Rules for personas
 
 1. A persona is a single role with a single output format. If you find yourself adding a second role, create a second persona.
-2. **Personas do not invoke other personas.** Composition is the job of slash commands or the user. On Claude Code this is also a hard platform constraint — *"subagents cannot spawn other subagents"* — so the rule is enforced for you.
+2. **Personas do not invoke other personas.** Composition is the job of the user or a workflow such as `ship`.
 3. A persona may invoke skills (the *how*).
 4. Every persona file ends with a "Composition" block stating where it fits.
 
 ## Claude Code interop
 
-The personas in this repo are designed to work as Claude Code subagents and as Agent Teams teammates without modification:
+The personas in this repo can be used as Claude Code subagents and Agent Teams teammates, subject to the host's supported configuration:
 
-- **As subagents:** auto-discovered when this plugin is enabled (no path config needed). Use the Agent tool with `subagent_type: code-reviewer` (or `security-auditor`, `test-engineer`). `/ship` is the canonical example.
-- **As Agent Teams teammates** (experimental, requires `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1`): reference the same persona name when spawning a teammate. The persona's body is **appended to** the teammate's system prompt as additional instructions (not a replacement), so your persona text sits on top of the team-coordination instructions the lead installs (SendMessage, task-list tools, etc.).
+- **As subagents:** use the Agent tool with the persona name (for example, `code-reviewer`) when available.
+- **As Agent Teams teammates:** where supported and enabled, reference the same persona name when spawning a teammate. Agent Teams are experimental and availability depends on the installed Claude Code version.
 
-Subagents only report results back to the main agent. Agent Teams let teammates message each other directly. Use subagents when reports are enough; use Agent Teams when sub-agents need to challenge each other's findings (e.g. competing-hypothesis debugging). See [references/orchestration-patterns.md](../references/orchestration-patterns.md) for the full mapping.
+Subagents report results back to the main agent. Agent Teams can allow teammates to message each other directly. Use subagents when reports are enough; use Agent Teams when teammates need to challenge each other's findings. See [references/orchestration-patterns.md](../references/orchestration-patterns.md).
 
-Plugin agents do not support `hooks`, `mcpServers`, or `permissionMode` frontmatter — those fields are silently ignored. Avoid relying on them when authoring new personas here.
+Do not assume platform-specific discovery, frontmatter support, or experimental feature availability across hosts; consult the host's current documentation.
 
 ## Adding a new persona
 
 1. Create `agents/<role>.md` with the same frontmatter format used by existing personas.
 2. Define the role, scope, output format, and rules.
-3. Add a **Composition** block at the bottom (Invoke directly when / Invoke via / Do not invoke from another persona).
+3. Add a **Composition** block at the bottom.
 4. Add the persona to the table at the top of this file.
 5. If the persona enables a new orchestration pattern, document it in `references/orchestration-patterns.md` rather than inventing the pattern in the persona file itself.
+

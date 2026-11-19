@@ -1,0 +1,15 @@
+{
+  "skill_name": "constraints",
+  "trigger": {
+    "positive": [
+      { "prompt": "Invoke `/constraints`.", "top_k": 1 },
+      { "prompt": "Use the `constraints` skill.", "top_k": 1 },
+      { "prompt": "Run the short `constraints` workflow.", "top_k": 1 }
+    ],
+    "negative": [
+      { "prompt": "Run `/test` for this bug fix.", "owner": "test" },
+      { "prompt": "Run `/ship` for this release.", "owner": "ship" }
+    ]
+  },
+  "evals": [{ "id": 1, "kind": "dialogue", "prompt": "Run `/constraints` to establish an enforceable quality bar for this codebase.", "expected_output": "Repository-specific measurable constraints backed by suitable checks", "expectations": ["Inspects existing project configuration and checks before asking questions", "Distinguishes enforceable metrics from aspirations", "Does not weaken or invent quality thresholds without rationale"] }]
+}

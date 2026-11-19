@@ -105,30 +105,28 @@ Use the @skills/test-driven-development/SKILL.md skill to implement this fix.
 
 This is useful when you want to ensure a specific workflow is followed without waiting for auto-discovery.
 
-## Slash Commands
+## Workflow Skills
 
-The repo ships 10 slash commands under `.gemini/commands/`: 8 lifecycle commands plus the `/webperf` and `/a11y` specialist audits. Gemini CLI auto-discovers them when you run from the project root.
+The lifecycle workflows are installed as skills alongside the specialist skills. Gemini CLI exposes discovered skills through its skill catalog; invoke the skill name directly (for example, `/spec` or `/build`) when slash invocation is available, or ask for the workflow by name in natural language.
 
-| Command | What it does |
-|---------|--------------|
-| `/spec` | Write a structured spec before writing code |
-| `/constraints` | Define and enforce the project's quality bar |
-| `/planning` | Break work into small, verifiable tasks |
-| `/build` | Implement the next task incrementally |
-| `/test` | Run TDD workflow — red, green, refactor |
-| `/review` | Five-axis code review |
-| `/code-simplify` | Reduce complexity without changing behavior |
-| `/ship` | Pre-launch checklist via parallel persona fan-out |
-| `/webperf` | Audit browser-facing apps for Core Web Vitals and performance issues |
-| `/a11y` | Audit an interface for WCAG 2.2 AA conformance and triage the violations found |
+| Workflow | Skill |
+|----------|-------|
+| Define | `spec` |
+| Plan | `plan` |
+| Build | `build` |
+| Verify | `test` |
+| Review | `review` |
+| Simplify | `code-simplify` |
+| Ship | `ship` |
+| Web performance | `webperf` |
+| Accessibility | `a11y` |
 
-Each command invokes the corresponding skill automatically — no manual skill loading required.
-
-> **Note:** Use `/planning` instead of `/plan` — `/plan` conflicts with a Gemini CLI internal command name.
+Skill slash-command availability and spelling can vary by Gemini CLI version and conflicts with built-in commands. Use `/skills list` to confirm what the current session discovered; if a short name collides or is unavailable, invoke the skill in natural language or use its full name (for example, `spec-driven-development`).
 
 ## Usage Tips
 
-1. **Prefer skills over GEMINI.md** — Skills activate on demand and keep your context window focused. Only put skills in GEMINI.md if you want them always loaded.
-2. **Skill descriptions matter** — Each SKILL.md has a `description` field in its frontmatter that tells agents when to activate it. The descriptions in this repo are optimized for auto-discovery across all supported tools (Claude Code, Gemini CLI, etc.) by clearly stating both *what* the skill does and *when* it should be triggered.
+1. **Prefer skills over GEMINI.md** — Skills activate on demand and keep your context window focused. Only put instructions in GEMINI.md if you want them always loaded.
+2. **Skill descriptions matter** — The `description` field in each skill's frontmatter guides auto-discovery.
 3. **Use agents for review** — Copy `agents/code-reviewer.md` content when requesting structured code reviews.
 4. **Combine with references** — Reference checklists from `references/` when working on specific quality areas like testing or performance.
+
