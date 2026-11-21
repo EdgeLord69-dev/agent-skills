@@ -260,7 +260,7 @@ Status: proposed
 [Only deltas from the original spec's boundaries; everything else inherits.]
 ```
 
-Save it alongside the original (e.g. `SPEC-postgres-migration.md` next to `SPEC.md`) and run it through the same gated workflow: human review, then plan, tasks, implement. Downstream commands know this convention — `/build auto` accepts a root-level `SPEC-<change>.md` as the spec for a follow-up change and treats it as a planning artifact in its clean-baseline check. Keep one change per delta spec — that keeps each plan/build cycle small and reviewable.
+Save it alongside the original (e.g. `SPEC-postgres-migration.md` next to `SPEC.md`) and run it through the same gated workflow: human review, then plan, tasks, implement. Downstream commands know this convention — `/build` accepts a root-level `SPEC-<change>.md` as the spec for a follow-up change and treats it as a planning artifact in its clean-baseline check. Keep one change per delta spec — that keeps each plan/build cycle small and reviewable.
 
 After the change ships, fold the outcome into the original spec (per Keeping the Spec Alive) so it stays the source of truth for what exists, and mark the delta implemented by changing its `Status:` line to `Status: implemented`. The original spec always describes the current system; delta specs describe transitions.
 

@@ -7,7 +7,7 @@
       { "prompt": "Run the short `test` workflow.", "top_k": 1 }
     ],
     "negative": [
-      { "prompt": "Run `/build` for the next planned implementation task.", "owner": "build" },
+      { "prompt": "Run `/build` for the approved plan.", "owner": "build" },
       { "prompt": "Run `/review` before merging this change.", "owner": "review" }
     ]
   },

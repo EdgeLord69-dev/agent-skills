@@ -11,5 +11,5 @@
       { "prompt": "Run `/review` for these changes.", "owner": "review" }
     ]
   },
-  "evals": [{ "id": 1, "kind": "dialogue", "prompt": "Run `/build` for the next approved task in the plan.", "expected_output": "A bounded, test-driven implementation of the next task", "expectations": ["Selects one pending task and respects its acceptance criteria", "Follows the required test-first verification workflow", "Does not silently execute unrelated tasks"] }]
+  "evals": [{ "id": 1, "kind": "dialogue", "prompt": "Run `/build` for the plan.", "expected_output": "An approved, test-driven implementation of the full plan", "expectations": ["Requires a matching spec and plan and obtains approval before implementation", "Executes all approved tasks in dependency order with test-first verification and task-scoped commits", "Stops for failures, unresolved decisions, or high-risk work"] }]
 }
