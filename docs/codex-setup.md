@@ -22,7 +22,7 @@ codex plugin add agent-skills@agent-skills
 
 ## Usage
 
-After install, invoke a skill in Codex chat with `@` (e.g. `@spec` or `@spec-driven-development`) or describe the task and let Codex pick the right skill. The ten short lifecycle skills are `spec`, `plan`, `build`, `test`, `review`, `ship`, `constraints`, `code-simplify`, `webperf`, and `a11y`; other skills remain available by their names under `skills/`.
+After installation, describe the task or workflow you want in Codex chat and let Codex select the appropriate skill. Skills are selected on demand from their names and descriptions.
 
 [Codex uses progressive disclosure](https://developers.openai.com/codex/skills): it starts with each skill's `name` and `description`, chooses skills on demand, then loads the full `SKILL.md` only when selected. Do not also paste `using-agent-skills/SKILL.md` into `AGENTS.md`, a system prompt, or other always-on context: that stacks the pack's meta-router on Codex's native router and adds unnecessary routing work. The meta-skill can remain installed with the pack; the warning is specifically against preloading its full instructions.
 
@@ -32,4 +32,4 @@ After install, invoke a skill in Codex chat with `@` (e.g. `@spec` or `@spec-dri
 - `.agents/plugins/marketplace.json` — marketplace entry declaring the repo root (`./`) as the plugin source.
 - `skills/<name>/SKILL.md` — unchanged. Codex and Claude Code share the same `name` + `description` frontmatter format, so one file serves both platforms.
 
-The `SessionStart` script under `hooks/` is a standalone helper for hosts without native skill routing and is not wired by this plugin. In Codex, invoke the skill directly (for example, `@spec` or `@spec-driven-development`).
+- The `SessionStart` script under `hooks/` is a standalone helper for hosts without native skill routing and is not wired by this plugin. Codex selects relevant skills from the task and their descriptions.

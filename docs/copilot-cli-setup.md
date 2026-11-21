@@ -39,19 +39,19 @@ In an interactive session, `/skills list` shows the same catalog.
 
 The root `plugin.json` is the manifest Copilot CLI reads. It takes precedence over `.claude-plugin/plugin.json`, which belongs to Claude Code. Its `$schema` line declares an [Agent Plugins 1.0.0](https://agent-plugins.org) manifest, which switches the CLI into Agent Plugins mode. The manifest sets no component paths, so they fall back to their defaults:
 
-- **Skills: available.** With no explicit path, the CLI uses the conventional `skills/` directory, and the skills are discovered there. The ten lifecycle skills (`spec`, `plan`, `build`, `test`, `review`, `ship`, `constraints`, `code-simplify`, `webperf`, and `a11y`) are real skills, not command wrappers.
-- **Commands: not available.** In Agent Plugins mode the CLI reads commands only from `com.github.copilot/commands/`, which this repo doesn't have, so no separate command files register. Invoke the skill names instead.
+- **Skills: available.** With no explicit path, the CLI uses the conventional `skills/` directory, and the skills are discovered there. Lifecycle workflows are skills, not command wrappers.
+- **Commands: not available.** In Agent Plugins mode the CLI reads commands only from `com.github.copilot/commands/`, which this repo doesn't have, so no separate command files register. Describe the workflow you want in natural language to use its skill.
 For manifest precedence and the per-component path defaults, see the [CLI plugin reference](https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-plugin-reference) and [Creating plugins](https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/plugins-creating).
 
 ## Usage
 
-Name the skill you want, or describe the task and let the agent route to it:
+Describe the task or workflow you want, and Copilot can select the relevant skill:
 
-> Use the spec-driven-development skill to write a spec for [the feature].
+> Write a spec for [the feature].
 
-> Use the test-driven-development skill: write a failing test for this bug first, then fix it.
+> Write a failing test for this bug first, then fix it.
 
-> Use the code-review-and-quality skill to review my staged changes.
+> Review my staged changes.
 
 ## Troubleshooting
 
@@ -59,5 +59,5 @@ Name the skill you want, or describe the task and let the agent route to it:
 |---------|---------------|
 | `plugin install` can't resolve `agent-skills@addy-agent-skills` | Run `copilot plugin marketplace add addyosmani/agent-skills` first — that name only resolves once the marketplace is registered. Or install the repository directly. |
 | Plugin installed but no skills | `copilot plugin list` to confirm the plugin, then `copilot skill list` (or `/skills list` in session) to see what was discovered. If the list is empty, check the root `plugin.json` against the [1.0.0 schema](https://agent-plugins.org/schemas/1.0.0/plugin.schema.json): in Agent Plugins mode any schema error (say, `author` as a string instead of an object) is fatal and the CLI loads no skills. |
-| `/spec`, `/build` and friends are not found | Skill slash commands depend on the CLI's current skill catalog and name resolution. Check `copilot skill list` or `/skills list`; if a short name is unavailable or conflicts, ask for the skill by name in natural language. |
+| Skill not selected as expected | Check `copilot skill list` or `/skills list`; describe the desired workflow in natural language. |
 | Skills changed locally but the CLI shows the old copy | Start a fresh session, or run with `--plugin-dir` pointing at your clone. |

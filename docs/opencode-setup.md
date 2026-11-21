@@ -160,9 +160,7 @@ Examples:
 
 ### Lifecycle Skills
 
-The lifecycle workflows, including the short names (`spec`, `plan`, `build`, `test`, `review`, `ship`, `constraints`, `code-simplify`, `webperf`, and `a11y`), are installed as skills. OpenCode does not require a separate command-file copy. Invoke the skill with the built-in `skill` tool, or ask for it by name; short slash-command behavior may vary by OpenCode version and can collide with built-in commands. The full descriptive skill names (such as `spec-driven-development`) are also available.
-
-For other skill-driven workflow examples, see [Project `AGENTS.md`](#project-agentsmd).
+Lifecycle workflows are installed as skills, not separate command files. Ask for the workflow by name in natural language or use OpenCode's built-in `skill` tool to select it. Full descriptive skill names (such as `spec-driven-development`) are also available.
 
 ### Example 2: Bug Fix
 

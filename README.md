@@ -14,7 +14,6 @@ Skills encode the workflows, quality gates, and best practices that senior engin
  │ Idea │ ───▶ │ Spec │ ───▶ │ Code │ ───▶ │ Test │ ───▶ │  QA  │ ───▶ │  Go  │
  │Refine│      │  PRD │      │ Impl │      │Debug │      │ Gate │      │ Live │
  └──────┘      └──────┘      └──────┘      └──────┘      └──────┘      └──────┘
-  /spec          /plan          /build        /test         /review       /ship
 ```
 
 ---
@@ -25,20 +24,18 @@ Skills encode the workflows, quality gates, and best practices that senior engin
 
 | What you're doing | Skill | Key principle |
 |-------------------|-------|---------------|
-| Define what to build | `/spec` | Spec before code |
-| Plan how to build it | `/plan` | Small, atomic tasks |
-| Build incrementally | `/build` | One slice at a time |
-| Prove it works | `/test` | Tests are proof |
-| Set the quality bar | `/constraints` | Decide it once, enforce it everywhere |
-| Review before merge | `/review` | Improve code health |
-| Audit web performance | `/webperf` | Measure before you optimize |
-| Audit accessibility | `/a11y` | Automation is a smoke test; manual verification completes the audit |
-| Simplify the code | `/code-simplify` | Clarity over cleverness |
-| Ship to production | `/ship` | Faster is safer |
+| Define what to build | Spec-driven development | Spec before code |
+| Plan how to build it | Planning and task breakdown | Small, atomic tasks |
+| Build incrementally | Incremental implementation | One slice at a time |
+| Prove it works | Test-driven development | Tests are proof |
+| Set the quality bar | Constraint-driven development | Decide it once, enforce it everywhere |
+| Review before merge | Code review and quality | Improve code health |
+| Audit web performance | Web performance audit | Measure before you optimize |
+| Audit accessibility | Accessibility audit | Automation is a smoke test; manual verification completes the audit |
+| Simplify the code | Code simplification | Clarity over cleverness |
+| Ship to production | Shipping and launch | Faster is safer |
 
-In Claude Code these install as plugin skills. Where a built-in command has the same name, use the namespaced form, such as `/agent-skills:review`. Other hosts may use different invocation syntax.
-
-Want fewer manual steps once the spec exists? **`/build auto`** generates the plan and implements every task in a single approved pass — you approve the plan once, then it runs autonomously. It removes the human stepping *between* tasks, not the verification: every task is still test-driven and committed individually, and it pauses on failures or risky steps.
+Ask your coding agent to follow the relevant workflow by name. For example, request that it build automatically after you approve the plan; the workflow generates the plan and implements each task in a single approved pass. It still verifies and commits each task individually, and pauses on failures or risky steps.
 
 Skills also activate automatically based on what you're doing — designing an API triggers `api-and-interface-design`, building UI triggers `frontend-ui-engineering`, and so on.
 
@@ -186,7 +183,7 @@ codex plugin marketplace add addyosmani/agent-skills
 codex plugin add agent-skills@agent-skills
 ```
 
-The first command registers the marketplace; the second installs the plugin. Codex reads the root `skills/` directory directly through `.codex-plugin/plugin.json`. Once installed, invoke skills in chat using `@` (e.g., `@spec-driven-development`). See [docs/codex-setup.md](docs/codex-setup.md) for local installation and troubleshooting.
+The first command registers the marketplace; the second installs the plugin. Codex reads the root `skills/` directory directly through `.codex-plugin/plugin.json`. Once installed, ask for a skill by its name (for example, "Follow the spec-driven-development workflow"). See [docs/codex-setup.md](docs/codex-setup.md) for local installation and troubleshooting.
 
 </details>
 
@@ -201,7 +198,7 @@ cmd skills add addyosmani/agent-skills --global   # install for all projects (~/
 cmd skills add addyosmani/agent-skills -s spec-driven-development  # install a specific skill
 ```
 
-Installed skills show up in the TUI slash menu, e.g. `/spec-driven-development`. See [docs/commandcode-setup.md](docs/commandcode-setup.md).
+Installed skills are available in the TUI. See [docs/commandcode-setup.md](docs/commandcode-setup.md).
 
 </details>
 
@@ -298,10 +295,10 @@ Pre-configured specialist personas for targeted reviews:
 | [code-reviewer](agents/code-reviewer.md) | Senior Staff Engineer | Five-axis code review with "would a staff engineer approve this?" standard |
 | [test-engineer](agents/test-engineer.md) | QA Specialist | Test strategy, coverage analysis, and the Prove-It pattern |
 | [security-auditor](agents/security-auditor.md) | Security Engineer | Vulnerability detection, threat modeling, OWASP assessment |
-| [web-performance-auditor](agents/web-performance-auditor.md) | Web Performance Engineer | Core Web Vitals audit with Quick/Deep modes and a metric-honesty rule; run it via `/webperf` |
-| [accessibility-auditor](agents/accessibility-auditor.md) | Accessibility Engineer | WCAG 2.2 AA audit with a scorecard and findings ranked by real user impact; run it via `/a11y` |
+| [web-performance-auditor](agents/web-performance-auditor.md) | Web Performance Engineer | Core Web Vitals audit with Quick/Deep modes and a metric-honesty rule |
+| [accessibility-auditor](agents/accessibility-auditor.md) | Accessibility Engineer | WCAG 2.2 AA audit with a scorecard and findings ranked by real user impact |
 
-See [docs/agents.md](docs/agents.md) for the decision matrix, orchestration rules, and how personas compose with skills and slash commands.
+See [docs/agents.md](docs/agents.md) for the decision matrix, orchestration rules, and how personas work with skills.
 
 ---
 

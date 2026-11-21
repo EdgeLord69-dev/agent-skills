@@ -30,21 +30,15 @@ Browse the `skills/` directory. Each subdirectory contains a `SKILL.md` with:
 - **Common rationalizations** — excuses the agent might use to skip steps
 - **Red flags** — signs the skill is being violated
 
-### 3. Load the skill into your agent
+### 3. Use the skill
 
-Copy the relevant `SKILL.md` content into your agent's system prompt, rules file, or conversation. The most common approaches:
-
-**System prompt:** Paste the skill content at the start of the session.
-
-**Rules file:** Add skill content to your project's rules file (CLAUDE.md, .cursorrules, etc.).
-
-**Conversation:** Reference the skill when giving instructions: "Follow the test-driven-development process for this change."
+Ask your agent to follow the relevant workflow by its natural-language name, such as: "Follow the test-driven-development process for this change."
 
 ### 4. Use the meta-skill for discovery when needed
 
-If your agent does not route skills natively, start with the `using-agent-skills` skill loaded. It contains a flowchart that maps task types to the appropriate skill.
+If your agent does not route skills natively, ask it to use the `using-agent-skills` workflow. It contains a flowchart that maps task types to the appropriate skill.
 
-If your host already discovers and activates skills from their descriptions, do not also paste `using-agent-skills` into an always-on system prompt or rules file. That creates two routers for the same task. Install the individual skills and let the host activate them on demand instead.
+If your host already discovers and activates skills from their descriptions, let it activate skills on demand instead of also loading `using-agent-skills` into an always-on system prompt or rules file. That creates two routers for the same task.
 
 ### Existing projects need no migration
 
@@ -117,28 +111,28 @@ The `agents/` directory contains pre-configured agent personas:
 | `code-reviewer.md` | Five-axis code review |
 | `test-engineer.md` | Test strategy and writing |
 | `security-auditor.md` | Vulnerability detection |
-| `web-performance-auditor.md` | Core Web Vitals & performance audit (via `/webperf`) |
-| `accessibility-auditor.md` | WCAG 2.2 AA conformance audit (via `/a11y`) |
+| `web-performance-auditor.md` | Core Web Vitals & performance audit |
+| `accessibility-auditor.md` | WCAG 2.2 AA conformance audit |
 
 Load an agent definition when you need specialized review. For example, ask your coding agent to "review this change using the code-reviewer agent persona" and provide the agent definition.
 
 ## Using workflow skills
 
-The short-named skills under `skills/` compose the specialist workflows. Hosts that support slash invocation can use the names below; other hosts may use different syntax.
+The short-named skills under `skills/` compose the specialist workflows. Ask your agent to follow a workflow by name:
 
-| Skill | Workflows invoked |
+| Workflow | Specialist skills |
 |---------|---------------|
-| `/spec` | spec-driven-development |
-| `/constraints` | constraint-driven-development |
-| `/plan` | planning-and-task-breakdown |
-| `/build` | incremental-implementation + test-driven-development |
-| `/build auto` | planning-and-task-breakdown → incremental-implementation + test-driven-development (whole plan, one approval) |
-| `/test` | test-driven-development |
-| `/review` | code-review-and-quality |
-| `/code-simplify` | code-simplification |
-| `/ship` | shipping-and-launch |
-| `/webperf` | web-performance-auditor (specialist agent, web apps only) |
-| `/a11y` | accessibility-engineering + accessibility-auditor (specialist audit, interfaces only) |
+| Spec-driven development | spec-driven-development |
+| Constraint-driven development | constraint-driven-development |
+| Planning and task breakdown | planning-and-task-breakdown |
+| Incremental implementation | incremental-implementation + test-driven-development |
+| Automatic implementation after plan approval | planning-and-task-breakdown → incremental-implementation + test-driven-development |
+| Test-driven development | test-driven-development |
+| Code review and quality | code-review-and-quality |
+| Code simplification | code-simplification |
+| Shipping and launch | shipping-and-launch |
+| Web performance audit | web-performance-auditor (specialist agent, web apps only) |
+| Accessibility audit | accessibility-engineering + accessibility-auditor (specialist audit, interfaces only) |
 
 
 ## Using References
@@ -167,7 +161,7 @@ This portability gap is tracked in
 
 ## Spec and task artifacts
 
-The `/spec` and `/plan` commands create working artifacts (`SPEC.md`, `tasks/plan.md`, `tasks/todo.md`). Treat them as **living documents** while the work is in progress:
+The specification and planning workflows create working artifacts (`SPEC.md`, `tasks/plan.md`, `tasks/todo.md`). Treat them as **living documents** while the work is in progress:
 
 - Keep them in version control during development so the human and the agent have a shared source of truth.
 - Update them when scope or decisions change.
@@ -186,11 +180,11 @@ The same artifacts are the handoff between sessions. For a small task, run the w
 
 #### Task-boundary restarts and Ralph loops
 
-`/build auto` can run the whole approved plan in one session. It does not require or perform a fresh process per task. Its per-task status updates, verification results, and commits make each completed task a restartable boundary, so a capable external harness may exit and resume there without depending on chat history.
+The build workflow's automatic mode can run the whole approved plan in one session. It does not require or perform a fresh process per task. Its per-task status updates, verification results, and commits make each completed task a restartable boundary, so a capable external harness may exit and resume there without depending on chat history.
 
 A shell-level "Ralph loop" is harness behavior, not a separate skill workflow. If you use one, restart only after the current task has reached a recorded boundary; on re-entry, read the durable artifacts and repository state before selecting the next pending task. A process exit is not evidence that a task passed, and a restart must not bypass an approval gate. See the `context-engineering` skill's **Restartable Session Boundaries** section for the handoff checklist.
 
-This doesn't need the `/spec` and `/plan` wrappers — plain requests work in any agent, including a `npx skills add` install that only has the skills:
+Plain requests work in any agent, including a `npx skills add` install that only has the skills:
 
 > Read SPEC.md, then break it into small verifiable tasks with acceptance criteria and dependency order. Save them to tasks/plan.md and tasks/todo.md. No product code yet — show me the plan first.
 

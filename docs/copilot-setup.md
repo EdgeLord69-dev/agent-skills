@@ -2,7 +2,7 @@
 
 This guide covers Copilot in VS Code. For the standalone `copilot` command-line tool, see [copilot-cli-setup.md](copilot-cli-setup.md).
 
-**What an install gives you:** the skills only. The short lifecycle names (`/spec`, `/plan`, `/build`, `/test`, `/review`, `/ship`, `/constraints`, `/code-simplify`, `/webperf`, and `/a11y`) are skills in this repository, not separate command wrappers. The full skill names are available too. Slash-command discovery and resolution can vary by Copilot surface and version; use `/skills` or type `/` to see the current catalog, and ask by skill name in natural language if a short name is missing or collides.
+**What an install gives you:** the skills only. The short lifecycle names are skills in this repository, not separate command wrappers. Describe a task or workflow in natural language; Copilot can select a relevant skill. Use `/skills` or type `/` to inspect the current catalog.
 
 ## Setup
 
@@ -102,13 +102,14 @@ The workflows are available as skills under their short names:
 | Web performance | `webperf` |
 | Accessibility | `a11y` |
 
-Type `/` or run `/skills` to inspect what the current Copilot surface discovered. If a short skill name is unavailable or resolves to a host command, invoke the corresponding full skill name (for example, `spec-driven-development`) or request it in natural language. Prompt files can provide aliases in VS Code's extension-host local agents, but the Agent Host does not use prompt files; aliases are not needed for these skills.
+Describe the task or workflow in natural language so Copilot can select a relevant skill.
 
-Examples:
+> Write a spec for [the feature].
 
-> Use the spec skill to write a spec for [the feature].
+> Review my staged changes.
 
-> Use the code-review-and-quality skill to review my staged changes.
+Use `/skills` to inspect what the current Copilot surface discovered. Prompt files can provide aliases in VS Code's extension-host local agents, but the Agent Host does not use prompt files; aliases are not needed for these skills.
+
 
 ## If skills do not appear
 

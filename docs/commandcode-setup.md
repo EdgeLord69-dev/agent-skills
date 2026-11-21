@@ -46,13 +46,7 @@ cmd skills remove spec-driven-development --global  # remove a user-scoped skill
 
 ## Usage
 
-Installed skills are discovered automatically and appear in the TUI slash menu, tagged `[skill]`:
-
-```
-/spec-driven-development   [skill] Write a spec before writing code…
-```
-
-Type `/` to browse, or start typing a skill name to filter. Use `/skills` to enable/disable skills.
+Installed skills are discovered automatically. Describe the task or workflow you want, and Command Code can select a relevant skill. Use `/skills` to enable or disable skills.
 
 ## Where skills live
 

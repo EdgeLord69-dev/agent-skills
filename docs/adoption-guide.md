@@ -35,15 +35,13 @@ A new project is the best-case scenario: there's no legacy behavior to preserve,
 
 Run the lifecycle in order for the project's first real feature:
 
-```
-/spec   →  SPEC.md            (spec-driven-development)
-/plan   →  tasks/plan.md      (planning-and-task-breakdown)
-/build  →  one slice at a time (incremental-implementation + test-driven-development)
-/review →  before every merge  (code-review-and-quality)
-/ship   →  when going live     (shipping-and-launch)
-```
+1. Define the feature and capture its requirements in `SPEC.md` with the spec-driven-development skill.
+2. Break the approved spec into `tasks/plan.md` with planning-and-task-breakdown.
+3. Implement one slice at a time with incremental-implementation and test-driven-development.
+4. Review before every merge with code-review-and-quality.
+5. Use shipping-and-launch when going live.
 
-`/build auto` is a good fit for greenfield: you approve the plan once and every task still runs test-driven and commits individually. The spec and plan artifacts (`SPEC.md`, `tasks/`) are living documents, keep them in version control while the work is in flight. If the feature spans more than one session, those files are also the handoff, see [working across sessions](getting-started.md#working-across-sessions).
+For greenfield work, incremental-implementation can execute an approved plan one task at a time, with test-driven development and individual commits. Keep the spec and plan artifacts (`SPEC.md`, `tasks/`) in version control while the work is in flight. If the feature spans more than one session, those files are also the handoff, see [working across sessions](getting-started.md#working-across-sessions).
 
 ### From the start, treat these as always-on
 
@@ -64,7 +62,7 @@ Run the lifecycle in order for the project's first real feature:
 
 ### Greenfield anti-patterns
 
-- **Skipping `/spec` because "it's just a prototype."** Prototypes become products. The spec is the cheapest artifact you'll ever write for this codebase.
+- **Skipping spec-driven-development because "it's just a prototype."** Prototypes become products. The spec is the cheapest artifact you'll ever write for this codebase.
 - **Loading every skill into every session.** It wastes context and dilutes the ones that matter. Load by phase; let the host's native router or `using-agent-skills` route, but not both.
 - **Deferring observability until "there's something to observe."** Instrument as you build, retrofitting structured logging is a Path B problem you're choosing to create.
 
@@ -95,7 +93,7 @@ Goal: every area the agent will touch gets a safety net first.
 
 Goal: two-speed adoption, legacy code stays under the Phase 1–2 regime; **new features get the greenfield treatment**.
 
-- New feature in the old codebase? `/spec → /plan → /build → /review`. The spec's boundaries section is where you declare what legacy surface the feature may and may not touch.
+- New feature in the old codebase? Define it with spec-driven-development, plan with planning-and-task-breakdown, implement with incremental-implementation and test-driven-development, then review with code-review-and-quality. The spec's boundaries section is where you declare what legacy surface the feature may and may not touch.
 - **`api-and-interface-design` at the seams.** When new code must talk to old code, design the boundary contract-first. Hyrum's Law is not theoretical in a years-old codebase, someone depends on every observable behavior, including the bugs.
 - **`security-and-hardening` as an audit, then a gate.** Run it once across the existing attack surface (auth, input handling, dependencies, the dependency audit alone usually pays for the exercise), file what you find, then enforce it on new changes.
 
@@ -117,11 +115,11 @@ Goal: two-speed adoption, legacy code stays under the Phase 1–2 regime; **new 
 
 ## The two paths converge
 
-Both end in the same steady state: `/spec → /plan → /build → /review → /ship` for new work, always-on TDD and git discipline, review gates before merge, and skills loaded by phase rather than in bulk. Greenfield gets there in days; brownfield gets there in a quarter, and the difference is exactly the safety nets (context, characterization tests, boundaries) that the old codebase never had.
+Both end in the same steady state: spec-driven-development → planning-and-task-breakdown → incremental-implementation → code-review-and-quality → shipping-and-launch for new work, always-on TDD and git discipline, review gates before merge, and skills loaded by phase rather than in bulk. Greenfield gets there in days; brownfield gets there in a quarter, and the difference is exactly the safety nets (context, characterization tests, boundaries) that the old codebase never had.
 
 |                        | Greenfield                     | Brownfield                               |
 | ---------------------- | ------------------------------ | ---------------------------------------- |
-| First skill loaded     | Native router, or `using-agent-skills` + `/spec` | `context-engineering`                    |
+| First skill loaded     | Native router, or `using-agent-skills` + spec-driven-development | `context-engineering`                    |
 | First value delivered  | Spec'd, tested first feature   | Zero-risk reviews and safer bug fixes    |
 | TDD posture            | Universal from commit one      | Selective: tests where change is planned |
 | Refactoring rule       | Rare (little to refactor)      | Characterization tests first, always     |

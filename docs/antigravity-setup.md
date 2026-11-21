@@ -45,22 +45,7 @@ agy plugin list
 
 ## Lifecycle Skills
 
-The ten lifecycle workflows are installed as skills. Invoke them from the plugin's namespaced skill catalog:
-
-| Workflow | Skill |
-|----------|-------|
-| Define | `/agent-skills:spec` |
-| Plan | `/agent-skills:plan` |
-| Build | `/agent-skills:build` |
-| Verify | `/agent-skills:test` |
-| Review | `/agent-skills:review` |
-| Simplify | `/agent-skills:code-simplify` |
-| Ship | `/agent-skills:ship` |
-| Constraints | `/agent-skills:constraints` |
-| Web performance | `/agent-skills:webperf` |
-| Accessibility | `/agent-skills:a11y` |
-
-Antigravity may reserve names for built-in commands, and skill invocation/catalog behavior can differ by release. Check `/skills` in the active session; if a short name conflicts or does not resolve, ask for the workflow by name in natural language.
+The lifecycle workflows are installed as skills. Describe the workflow you want in natural language, and Antigravity will select an appropriate skill when the task matches. Use `/skills` to inspect the available skills.
 
 
 ---
@@ -80,7 +65,7 @@ To validate that your local plugin is correctly structured and contains all skil
 agy plugin validate /path/to/agent-skills
 ```
 
-Then start a fresh session and inspect `/agent-skills:` in the skill catalog. Plugin validation checks structure; it does not guarantee every skill appears or that a short invocation is available in every release.
+Then start a fresh session and inspect `/skills` in the active session. Plugin validation checks structure; it does not guarantee every skill appears in the catalog.
 
 ---
 

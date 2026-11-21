@@ -95,33 +95,13 @@ Gemini CLI supports session lifecycle hooks. You can use these to automatically 
 
 To replicate the `agent-skills` experience from other tools, you can configure a `SessionStart` hook that reminds you of the available skills or loads a meta-skill. `hooks/session-start.sh` in this repo is a ready-made script for that: it prints the `using-agent-skills` meta-skill as a standard `SessionStart` JSON envelope on stdout.
 
-### Explicit Context Loading
+## Explicit Context Loading
 
-You can explicitly load any skill into your current session by referencing it with the `@` symbol in your prompt:
-
-```markdown
-Use the @skills/test-driven-development/SKILL.md skill to implement this fix.
-```
-
-This is useful when you want to ensure a specific workflow is followed without waiting for auto-discovery.
+To request a particular workflow, describe it by name in natural language. Gemini can select the matching skill from the available catalog.
 
 ## Workflow Skills
 
-The lifecycle workflows are installed as skills alongside the specialist skills. Gemini CLI exposes discovered skills through its skill catalog; invoke the skill name directly (for example, `/spec` or `/build`) when slash invocation is available, or ask for the workflow by name in natural language.
-
-| Workflow | Skill |
-|----------|-------|
-| Define | `spec` |
-| Plan | `plan` |
-| Build | `build` |
-| Verify | `test` |
-| Review | `review` |
-| Simplify | `code-simplify` |
-| Ship | `ship` |
-| Web performance | `webperf` |
-| Accessibility | `a11y` |
-
-Skill slash-command availability and spelling can vary by Gemini CLI version and conflicts with built-in commands. Use `/skills list` to confirm what the current session discovered; if a short name collides or is unavailable, invoke the skill in natural language or use its full name (for example, `spec-driven-development`).
+Lifecycle workflows are installed as skills alongside specialist skills. Describe the workflow you want in natural language, and Gemini CLI can select a relevant skill. Use `/skills list` to inspect discovered skills.
 
 ## Usage Tips
 

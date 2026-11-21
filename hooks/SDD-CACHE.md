@@ -48,7 +48,7 @@ This hook caches fetched content on disk, but **revalidates with the origin serv
 
 2. Make sure `.claude/sdd-cache/` is in your `.gitignore` (already included in this repo).
 
-3. Use `/source-driven-development` (or the skill) as usual. No changes to the skill or the agent's workflow — the cache is transparent.
+3. Use the source-driven-development skill as usual. No changes to the skill or the agent's workflow — the cache is transparent.
 
 ## Mental model
 
