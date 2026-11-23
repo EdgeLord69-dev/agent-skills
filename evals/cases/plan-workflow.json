@@ -1,0 +1,15 @@
+{
+  "skill_name": "plan-workflow",
+  "trigger": {
+    "positive": [
+      { "prompt": "Invoke `/plan-workflow`.", "top_k": 1 },
+      { "prompt": "Use the `plan-workflow` skill.", "top_k": 1 },
+      { "prompt": "Run the short `plan-workflow` workflow.", "top_k": 1 }
+    ],
+    "negative": [
+      { "prompt": "Run `/spec-workflow` for this new capability.", "owner": "spec-workflow" },
+      { "prompt": "Run `/build-workflow` for the approved plan.", "owner": "build-workflow" }
+    ]
+  },
+  "evals": [{ "id": 1, "kind": "dialogue", "prompt": "Run `/plan-workflow` for this approved feature specification.", "expected_output": "A dependency-ordered plan of verifiable vertical-slice tasks", "expectations": ["Keeps planning read-only", "Includes concrete acceptance criteria and verification steps per task", "Does not start implementation"] }]
+}

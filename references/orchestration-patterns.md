@@ -32,12 +32,12 @@ user → code-reviewer → report → user
 A skill captures a repeatable workflow and can be invoked by the user alongside (or independently of) a persona. Host-specific invocation syntax varies; don't assume a slash-command interface.
 
 ```
-review skill → code-review-and-quality workflow → report
+review-workflow → code-review-and-quality workflow → report
 ```
 
 **Use when:** the work needs a repeatable process, but not necessarily a separate persona context.
 
-**Examples in this repo:** `spec`, `plan`, `build`, `test`, `review`, `constraints`, `code-simplify`, `webperf`, `a11y`.
+**Examples in this repo:** `spec-workflow`, `plan-workflow`, `build-workflow`, `test-workflow`, `review-workflow`, `constraints-workflow`, `code-simplify-workflow`, `webperf-workflow`, `a11y-workflow`.
 
 **Cost:** one context; the skill is workflow guidance, not another agent.
 
@@ -50,7 +50,7 @@ Multiple personas operate on the same input concurrently, each producing an inde
 
 ```
                     ┌─→ code-reviewer    ─┐
-ship workflow → fan out ─┼─→ security-auditor ─┤→ merge → go/no-go + rollback
+ship-workflow → fan out ─┼─→ security-auditor ─┤→ merge → go/no-go + rollback
                     └─→ test-engineer    ─┘
 ```
 
@@ -60,7 +60,7 @@ ship workflow → fan out ─┼─→ security-auditor ─┤→ merge → go/n
 - The merge step is small enough to stay in the main context
 - Wall-clock latency matters
 
-**Examples in this repo:** `ship`.
+**Examples in this repo:** `ship-workflow`.
 
 **Cost:** N parallel sub-agent contexts + one merge turn. Higher than direct invocation, but faster wall-clock and produces better reports because each sub-agent stays focused on its single perspective.
 
@@ -79,7 +79,7 @@ If any answer is "no," fall back to direct invocation or a single workflow skill
 The user invokes skills in a defined order, carrying context (or commit history) between them. There is no orchestrator agent — the user IS the orchestrator.
 
 ```
-user runs:  spec → plan → build → test → review → ship
+user runs:  spec-workflow → plan-workflow → build-workflow → test-workflow → review-workflow → ship-workflow
 ```
 
 **Use when:** the workflow has dependencies (each step needs the previous step's output) and human judgment between steps adds value.
@@ -129,7 +129,7 @@ When authoring a persona, only rely on the frontmatter fields supported by the t
 
 ## Worked example: Agent Teams for competing-hypothesis debugging
 
-This example shows when to use collaborative Agent Teams instead of `ship`'s subagent fan-out. The patterns both involve multiple personas, but differ in whether investigators need to exchange findings.
+This example shows when to use collaborative Agent Teams instead of `ship-workflow`'s subagent fan-out. The patterns both involve multiple personas, but differ in whether investigators need to exchange findings.
 
 ### The scenario
 
@@ -142,21 +142,21 @@ Plausible root causes (mutually exclusive, all fit the symptoms):
 3. A missing index on a query that scales with cart size
 4. A flaky third-party API where the SDK retries silently before timing out
 
-A single agent will pick the first plausible theory and stop investigating. A `ship`-style fan-out gives each persona an independent report, but the reports do not challenge one another, so nothing rules out the wrong theories.
+A single agent will pick the first plausible theory and stop investigating. A `ship-workflow`-style fan-out gives each persona an independent report, but the reports do not challenge one another, so nothing rules out the wrong theories.
 
 This is exactly the case collaborative-agent-team patterns aim to address: independent investigators actively challenge one another, making the surviving theory more likely to be the actual root cause.
 
-### Why this is *not* a `ship` job
+### Why this is *not* a `ship-workflow` job
 
-| | `ship` (subagents) | Collaborative team |
+| | `ship-workflow` (subagents) | Collaborative team |
 |--|--------------------|-------------|
 | Sub-agents see | The same diff, different lenses | A shared task list, each other's messages |
 | Output | Three independent reports → one merge | Adversarial debate → consensus root cause |
 | Right when | You want a verdict on a known artifact | You want to *find* the artifact among hypotheses |
 
-`ship` is a verdict; a collaborative team is an investigation.
+`ship-workflow` is a verdict; a collaborative team is an investigation.
 PUT 221.=231:
-Three teammates running for ~10–15 minutes of investigation can cost noticeably more than the same three personas spawned as subagents by `ship`. The justification is *quality of conclusion* — for production debugging where the wrong fix is expensive, the extra tokens may be worthwhile. For a routine PR review, use `ship`.
+Three teammates running for ~10–15 minutes of investigation can cost noticeably more than the same three personas spawned as subagents by `ship-workflow`. The justification is *quality of conclusion* — for production debugging where the wrong fix is expensive, the extra tokens may be worthwhile. For a routine PR review, use `ship-workflow`.
 
 ### Anti-pattern in this scenario
 
@@ -164,7 +164,7 @@ Do **not** turn this into a workflow that fans out isolated subagents: they cann
 
 ### When *not* to use collaborative teams
 
-- Production-bound verdict on a known diff → use `ship` (subagents).
+- Production-bound verdict on a known diff → use `ship-workflow` (subagents).
 - One specialist perspective on one artifact → direct persona invocation.
 - Sequential lifecycle (spec → plan → build) → user-driven skills (Pattern 4).
 
@@ -230,7 +230,7 @@ Always cleanup through the lead, not a teammate (per the docs: teammates lack fu
 
 ### Cost expectation
 
-Three teammates running for ~10–15 minutes of investigation can cost noticeably more than the same three personas spawned as subagents by `ship`. The justification is *quality of conclusion* — for production debugging where the wrong fix is expensive, the extra tokens may be worthwhile. For a routine PR review, use `ship`.
+Three teammates running for ~10–15 minutes of investigation can cost noticeably more than the same three personas spawned as subagents by `ship-workflow`. The justification is *quality of conclusion* — for production debugging where the wrong fix is expensive, the extra tokens may be worthwhile. For a routine PR review, use `ship-workflow`.
 
 ### Anti-pattern in this scenario
 
@@ -238,9 +238,9 @@ Do **not** turn this into a workflow that fans out isolated subagents: they cann
 
 ### When *not* to use collaborative teams
 
-- Production-bound verdict on a known diff → use `ship` (subagents).
+- Production-bound verdict on a known diff → use `ship-workflow` (subagents).
 - One specialist perspective on one artifact → direct persona invocation.
-- Sequential lifecycle (spec → plan → build) → user-driven skills (Pattern 4).
+- Sequential lifecycle (spec-workflow → plan-workflow → build-workflow) → user-driven skills (Pattern 4).
 - Read-heavy research with a small digest → built-in `Explore` subagent.
 
 Reach for collaborative teams only when teammates **need** to challenge each other to produce the right answer.

@@ -1,0 +1,15 @@
+{
+  "skill_name": "webperf-workflow",
+  "trigger": {
+    "positive": [
+      { "prompt": "Invoke `/webperf-workflow`.", "top_k": 1 },
+      { "prompt": "Use the `webperf-workflow` skill.", "top_k": 1 },
+      { "prompt": "Run the short `webperf-workflow` workflow.", "top_k": 1 }
+    ],
+    "negative": [
+      { "prompt": "Run `/a11y-workflow` for this interface.", "owner": "a11y-workflow" },
+      { "prompt": "Run `/review-workflow` for this release candidate.", "owner": "review-workflow" }
+    ]
+  },
+  "evals": [{ "id": 1, "kind": "dialogue", "prompt": "Run `/webperf-workflow` to assess this page's performance.", "expected_output": "An evidence-based web performance assessment with sourced metrics and prioritized recommendations", "expectations": ["Uses available performance evidence and distinguishes measured from unmeasured values", "Does not fabricate scores or metrics", "Keeps recommendations specific to browser-facing web performance"] }]
+}

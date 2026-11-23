@@ -1,6 +1,6 @@
 ---
-name: spec
-description: Creates a spec through the spec workflow. Use when explicitly requesting the spec skill.
+name: spec-workflow
+description: Use only when explicitly requesting the spec-workflow skill.
 ---
 
 # Specify Work

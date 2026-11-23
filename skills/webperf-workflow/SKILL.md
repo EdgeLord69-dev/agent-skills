@@ -1,6 +1,6 @@
 ---
-name: webperf
-description: Runs the webperf auditor workflow. Use when explicitly requesting the webperf skill.
+name: webperf-workflow
+description: Runs the webperf auditor workflow. Use when explicitly requesting the webperf-workflow skill.
 ---
 
 # Web Performance Audit

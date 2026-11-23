@@ -179,5 +179,5 @@ Identify the framework and rendering model (React, Vue, Svelte, Angular, Next.js
 
 ## Composition
 
-- **Invoke directly** for a web performance audit, or use `webperf` for the repeatable audit workflow. Not included in `ship` fan-out — performance audits apply to web applications only, not to utility libraries or CLI tools.
+- **Invoke directly** for a web performance audit, or use `webperf-workflow` for the repeatable audit workflow. Not included in `ship-workflow` fan-out — performance audits apply to web applications only, not to utility libraries or CLI tools.
 - **Do not invoke from another persona.** Surface follow-up audit recommendations in your report; the user chooses whether to run another pass. See [docs/agents.md](../docs/agents.md).

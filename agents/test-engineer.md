@@ -90,5 +90,5 @@ When analyzing test coverage:
 
 ## Composition
 
-- **Invoke directly** for a coverage gap analysis, or use `ship` for parallel fan-out alongside `code-reviewer` and `security-auditor`. The `test` skill guides the main session and does not spawn this persona.
+- **Invoke directly** for a coverage gap analysis, or use `ship-workflow` for parallel fan-out alongside `code-reviewer` and `security-auditor`. The `test-workflow` skill guides the main session and does not spawn this persona.
 - **Do not invoke from another persona.** Recommendations to add tests belong in your report; the user decides when to act on them. See [docs/agents.md](../docs/agents.md).

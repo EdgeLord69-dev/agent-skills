@@ -1,0 +1,15 @@
+{
+  "skill_name": "ship-workflow",
+  "trigger": {
+    "positive": [
+      { "prompt": "Invoke `/ship-workflow`.", "top_k": 1 },
+      { "prompt": "Use the `ship-workflow` skill.", "top_k": 1 },
+      { "prompt": "Run the short `ship-workflow` workflow.", "top_k": 1 }
+    ],
+    "negative": [
+      { "prompt": "Run `/review-workflow` on this diff.", "owner": "review-workflow" },
+      { "prompt": "Run `/constraints-workflow` to enforce quality checks.", "owner": "constraints-workflow" }
+    ]
+  },
+  "evals": [{ "id": 1, "kind": "dialogue", "prompt": "Run `/ship-workflow` to decide whether this change is ready for production.", "expected_output": "A launch readiness assessment with blockers, risks, and rollback plan", "expectations": ["Evaluates launch risks rather than treating passing tests as sufficient", "States a clear go/no-go decision with supporting evidence", "Includes actionable rollback triggers and procedure"] }]
+}

@@ -1,6 +1,6 @@
 ---
-name: ship
-description: Runs the ship readiness workflow and specialist fan-out. Use when explicitly requesting the ship skill.
+name: ship-workflow
+description: Runs the ship readiness workflow and specialist fan-out. Use when explicitly requesting the ship-workflow skill.
 ---
 
 # Ship Readiness

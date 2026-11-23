@@ -1,6 +1,6 @@
 ---
-name: test
-description: Runs the test workflow. Use when explicitly requesting the test skill.
+name: test-workflow
+description: Use only when explicitly requesting the test-workflow skill.
 ---
 
 # Test-Driven Development

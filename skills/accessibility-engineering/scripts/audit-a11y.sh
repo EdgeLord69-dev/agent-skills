@@ -181,7 +181,7 @@ if [ -f "$TEMP_DIR/pa11y-report.json" ]; then
       for (const issue of issues) {
         // pa11y has no impact scale: typeCode 1 is "error", and by default pa11y
         // reports only errors. Mapping that to critical would turn every pa11y
-        // result into a /ship NO-GO, because axe rates the same failure serious.
+        // result into a /ship-workflow NO-GO, because axe rates the same failure serious.
         const sev = (issue.typeCode === 1 ? 'serious' : issue.typeCode === 2 ? 'moderate' : 'minor');
         if (result.summary[sev] !== undefined) result.summary[sev]++;
         result.violations.push({

@@ -1,0 +1,15 @@
+{
+  "skill_name": "review-workflow",
+  "trigger": {
+    "positive": [
+      { "prompt": "Invoke `/review-workflow`.", "top_k": 1 },
+      { "prompt": "Use the `review-workflow` skill.", "top_k": 1 },
+      { "prompt": "Run the short `review-workflow` workflow.", "top_k": 1 }
+    ],
+    "negative": [
+      { "prompt": "Run `/code-simplify-workflow` on this function.", "owner": "code-simplify-workflow" },
+      { "prompt": "Run `/test-workflow` to reproduce this bug.", "owner": "test-workflow" }
+    ]
+  },
+  "evals": [{ "id": 1, "kind": "dialogue", "prompt": "Run `/review-workflow` on this change before merge.", "expected_output": "A structured code review with severity-ranked actionable findings", "expectations": ["Reviews the requested change rather than implementing it", "Provides concrete evidence and file references for findings", "Distinguishes severity and reports no unsupported findings"] }]
+}

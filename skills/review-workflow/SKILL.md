@@ -1,6 +1,6 @@
 ---
-name: review
-description: Runs the review workflow for changes. Use when explicitly requesting the review skill.
+name: review-workflow
+description: Use only when explicitly requesting the review-workflow skill.
 ---
 
 # Code Review

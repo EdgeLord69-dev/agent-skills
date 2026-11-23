@@ -75,7 +75,7 @@ This repo has two composable layers:
 
 Composition rule: **the user or a workflow skill is the orchestrator. Personas do not invoke other personas.** A persona may invoke skills.
 
-The endorsed multi-persona pattern is **parallel fan-out with a merge step** — used by `/ship` to run `code-reviewer`, `security-auditor`, and `test-engineer` concurrently and synthesize their reports. Do not build a "router" persona that decides which other persona to call; that is the job of workflow skills and intent mapping.
+The endorsed multi-persona pattern is **parallel fan-out with a merge step** — used by `ship-workflow` to run `code-reviewer`, `security-auditor`, and `test-engineer` concurrently and synthesize their reports. Do not build a "router" persona that decides which other persona to call; that is the job of workflow skills and intent mapping.
 
 See [docs/agents.md](docs/agents.md) for the decision matrix and [references/orchestration-patterns.md](references/orchestration-patterns.md) for the full pattern catalog.
 

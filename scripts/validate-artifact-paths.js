@@ -4,8 +4,8 @@
  *
  * Guards the spec -> plan -> build pipeline against silent artifact-path drift.
  *
- * The `/spec` and `/plan` commands (producers) write their artifacts to a set
- * of paths that the `/build` command and the spec/plan skills (consumers) read
+ * The `/spec-workflow` and `/plan-workflow` skills (producers) write their artifacts to a set
+ * of paths that the `/build-workflow` skill and the spec/plan skills (consumers) read
  * back. When a producer moves an artifact without updating the consumers — as
  * in PR #93, which pointed `/spec` and `/plan` at docs/features/[name]/ while
  * `/build` still required SPEC.md and tasks/plan.md — the pipeline breaks, and
@@ -33,10 +33,10 @@ const ROOT = path.resolve(__dirname, '..');
 // file paths the pipeline files may reference. To change the convention, edit
 // this list and update every guarded file to match — CI enforces the pairing.
 const ARTIFACT_ALLOWLIST = new Set([
-  'SPEC.md',        // spec, project root (produced by /spec, read by /build)
-  'docs/SPEC.md',   // spec, alternate location accepted by /build
-  'tasks/plan.md',  // plan (produced by /plan, read by /build)
-  'tasks/todo.md',  // task list (produced by /plan)
+  'SPEC.md',        // spec, project root (produced by /spec-workflow, read by /build-workflow)
+  'docs/SPEC.md',   // spec, alternate location accepted by /build-workflow
+  'tasks/plan.md',  // plan (produced by /plan-workflow, read by /build-workflow)
+  'tasks/todo.md',  // task list (produced by /plan-workflow)
 ]);
 
 // The files that make up the spec -> plan -> build pipeline. Absent files are

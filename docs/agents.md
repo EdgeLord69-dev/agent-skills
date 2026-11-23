@@ -25,20 +25,20 @@ The user is the orchestrator. **Personas do not call other personas.** Skills ca
 
 Use the relevant skill directly for a repeatable workflow:
 
-- `spec` → define requirements and scope
-- `plan` → break work into an actionable plan
-- `build` → implement planned changes
-- `test` → develop and verify tests
-- `review` → review changes
-- `ship` → coordinate review, security, and test perspectives, then synthesize a go/no-go decision
-- `constraints` → identify and apply quality-bar constraints
-- `code-simplify` → simplify working code without changing behavior
-- `webperf` → audit web performance
-- `a11y` → audit accessibility
+- `spec-workflow` → define requirements and scope
+- `plan-workflow` → break work into an actionable plan
+- `build-workflow` → implement planned changes
+- `test-workflow` → develop and verify tests
+- `review-workflow` → review changes
+- `ship-workflow` → coordinate review, security, and test perspectives, then synthesize a go/no-go decision
+- `constraints-workflow` → identify and apply quality-bar constraints
+- `code-simplify-workflow` → simplify working code without changing behavior
+- `webperf-workflow` → audit web performance
+- `a11y-workflow` → audit accessibility
 
 Skills are discoverable by the harness; invocation syntax varies by host. Use the skill by name or ask naturally for its workflow rather than assuming every host exposes slash commands.
 
-The workflow skills do not replace the specialist personas. For a focused report in a fresh context, invoke the relevant persona directly; `ship` is the workflow that composes `code-reviewer`, `security-auditor`, and `test-engineer` in parallel and merges their reports.
+The workflow skills do not replace the specialist personas. For a focused report in a fresh context, invoke the relevant persona directly; `ship-workflow` is the workflow that composes `code-reviewer`, `security-auditor`, and `test-engineer` in parallel and merges their reports.
 
 ## When to use each
 
@@ -52,9 +52,9 @@ Pick this when you want one perspective on the current change and the user is in
 - "Is this page usable with a screen reader?" → invoke `accessibility-auditor` directly
 
 ### Parallel fan-out with merge
-Use `ship` only when independent investigations can run in parallel and produce reports that a single agent then merges:
+Use `ship-workflow` only when independent investigations can run in parallel and produce reports that a single agent then merges:
 
-- `ship` → fans out to `code-reviewer` + `security-auditor` + `test-engineer` in parallel, then synthesizes their reports into a go/no-go decision
+- `ship-workflow` → fans out to `code-reviewer` + `security-auditor` + `test-engineer` in parallel, then synthesizes their reports into a go/no-go decision
 
 This is the only multi-persona orchestration pattern this repo endorses. See [references/orchestration-patterns.md](../references/orchestration-patterns.md) for the full pattern catalog and anti-patterns.
 
@@ -64,16 +64,15 @@ This is the only multi-persona orchestration pattern this repo endorses. See [re
 Is the work a single perspective on a single artifact?
 ├── Yes → Direct persona invocation
 └── No  → Are the sub-tasks independent (no shared mutable state, no ordering)?
-         ├── Yes → Use ship for parallel fan-out and merge
-         └── No  → User runs workflow skills in sequence (spec → plan → build → test → review → ship)
-```
+         ├── Yes → Use ship-workflow for parallel fan-out and merge
+         └── No  → User runs workflow skills in sequence (spec-workflow → plan-workflow → build-workflow → test-workflow → review-workflow → ship-workflow)
 
 ## Worked example: valid orchestration
 
-`ship` is the canonical fan-out workflow in this repo:
+`ship-workflow` is the canonical fan-out workflow in this repo:
 
 ```
-ship
+ship-workflow
   ├── (parallel) code-reviewer    → review report
   ├── (parallel) security-auditor → audit report
   └── (parallel) test-engineer    → coverage report
@@ -112,7 +111,7 @@ Why this fails:
 ## Rules for personas
 
 1. A persona is a single role with a single output format. If you find yourself adding a second role, create a second persona.
-2. **Personas do not invoke other personas.** Composition is the job of the user or a workflow such as `ship`.
+2. **Personas do not invoke other personas.** Composition is the job of the user or a workflow such as `ship-workflow`.
 3. A persona may invoke skills (the *how*).
 4. Every persona file ends with a "Composition" block stating where it fits.
 

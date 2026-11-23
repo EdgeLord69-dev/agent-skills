@@ -1,6 +1,6 @@
 ---
-name: plan
-description: Produces a plan through the plan workflow. Use when explicitly requesting the plan skill.
+name: plan-workflow
+description: Use only when explicitly requesting the plan-workflow skill.
 ---
 
 # Plan Work

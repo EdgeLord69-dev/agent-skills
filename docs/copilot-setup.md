@@ -87,20 +87,20 @@ Use the agents for targeted review workflows in Copilot Chat.
 
 ## Lifecycle Skills
 
-The workflows are available as skills under their short names:
+The workflows are available as skills under their workflow names:
 
 | Workflow | Skill |
 |----------|-------|
-| Define | `spec` |
-| Plan | `plan` |
-| Build | `build` |
-| Verify | `test` |
-| Review | `review` |
-| Simplify | `code-simplify` |
-| Ship | `ship` |
-| Constraints | `constraints` |
-| Web performance | `webperf` |
-| Accessibility | `a11y` |
+| Define | `spec-workflow` |
+| Plan | `plan-workflow` |
+| Build | `build-workflow` |
+| Verify | `test-workflow` |
+| Review | `review-workflow` |
+| Simplify | `code-simplify-workflow` |
+| Ship | `ship-workflow` |
+| Constraints | `constraints-workflow` |
+| Web performance | `webperf-workflow` |
+| Accessibility | `a11y-workflow` |
 
 Describe the task or workflow in natural language so Copilot can select a relevant skill.
 

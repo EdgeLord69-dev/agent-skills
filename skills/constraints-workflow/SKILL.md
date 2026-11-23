@@ -1,6 +1,6 @@
 ---
-name: constraints
-description: Runs the constraints setup, check, guard, or ratchet workflow. Use when explicitly requesting the constraints skill.
+name: constraints-workflow
+description: Runs the constraints setup, check, guard, or ratchet workflow. Use when explicitly requesting the constraints-workflow skill.
 ---
 
 # Repository Constraints

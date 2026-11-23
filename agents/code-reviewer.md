@@ -97,5 +97,5 @@ Categorize every finding, using the same severity labels as the `code-review-and
 
 ## Composition
 
-- **Invoke directly** for a focused review, or use `ship` for parallel fan-out alongside `security-auditor` and `test-engineer`. The `review` skill guides the main session and does not spawn this persona.
-- **Do not invoke from another persona.** Surface recommendations for deeper security or test review in your report; orchestration belongs to the user or the `ship` workflow. See [docs/agents.md](../docs/agents.md).
+- **Invoke directly** for a focused review, or use `ship-workflow` for parallel fan-out alongside `security-auditor` and `test-engineer`. The `review-workflow` skill guides the main session and does not spawn this persona.
+- **Do not invoke from another persona.** Surface recommendations for deeper security or test review in your report; orchestration belongs to the user or the `ship-workflow`. See [docs/agents.md](../docs/agents.md).

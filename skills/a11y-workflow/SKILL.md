@@ -1,6 +1,6 @@
 ---
-name: a11y
-description: Runs the a11y accessibility-auditor workflow. Use when explicitly requesting the a11y skill.
+name: a11y-workflow
+description: Use only when explicitly requesting the a11y-workflow skill.
 ---
 
 # Accessibility Audit

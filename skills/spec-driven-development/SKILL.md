@@ -62,7 +62,7 @@ Build order: identity → billing, notifications → reporting
 
 **The map is gated like every phase.** The human reviews module boundaries, dependency direction, and build order before any module spec is written. Getting the map wrong is expensive; reviewing ten lines is not.
 
-**Then recurse per module.** Run Specify → Plan → Tasks → Implement for each module in dependency order. Each module gets its own spec, scoped to that module's objective, boundaries, and success criteria. Save the approved map as `spec/capability-map.md` and each module's spec alongside it in `spec/`, named by module id (`spec/SPEC-identity.md`, `spec/SPEC-billing.md`) — `/build` already accepts specs under `spec/`, and the root stays uncluttered — the map, not filename guessing, is the index of what exists.
+**Then recurse per module.** Run Specify → Plan → Tasks → Implement for each module in dependency order. Each module gets its own spec, scoped to that module's objective, boundaries, and success criteria. Save the approved map as `spec/capability-map.md` and each module's spec alongside it in `spec/`, named by module id (`spec/SPEC-identity.md`, `spec/SPEC-billing.md`) — `/build-workflow` already accepts specs under `spec/`, and the root stays uncluttered — the map, not filename guessing, is the index of what exists.
 
 ### Phase 1: Specify
 
@@ -188,7 +188,7 @@ With the validated spec, generate a technical implementation plan:
 
 > Follow `planning-and-task-breakdown` for the dependency-graph mapping and vertical-slicing mechanics behind these steps; it is the canonical source. The bullets above are a lightweight summary; if they ever diverge, `planning-and-task-breakdown` takes precedence.
 >
-> **Output convention:** Save the plan to `tasks/plan.md` and record the task list in the task list target defined by `planning-and-task-breakdown` (default `tasks/todo.md`; projects may designate an external tracker instead). Create `tasks/` if it does not exist. Downstream commands (`/build`, etc.) expect these defaults.
+> **Output convention:** Save the plan to `tasks/plan.md` and record the task list in the task list target defined by `planning-and-task-breakdown` (default `tasks/todo.md`; projects may designate an external tracker instead). Create `tasks/` if it does not exist. Downstream workflows (`/build-workflow`, etc.) expect these defaults.
 
 The plan should be reviewable: the human should be able to read it and say "yes, that's the right approach" or "no, change X."
 
@@ -260,7 +260,7 @@ Status: proposed
 [Only deltas from the original spec's boundaries; everything else inherits.]
 ```
 
-Save it alongside the original (e.g. `SPEC-postgres-migration.md` next to `SPEC.md`) and run it through the same gated workflow: human review, then plan, tasks, implement. Downstream commands know this convention — `/build` accepts a root-level `SPEC-<change>.md` as the spec for a follow-up change and treats it as a planning artifact in its clean-baseline check. Keep one change per delta spec — that keeps each plan/build cycle small and reviewable.
+Save it alongside the original (e.g. `SPEC-postgres-migration.md` next to `SPEC.md`) and run it through the same gated workflow: human review, then plan, tasks, implement. Downstream workflows know this convention — `/build-workflow` accepts a root-level `SPEC-<change>.md` as the spec for a follow-up change and treats it as a planning artifact in its clean-baseline check. Keep one change per delta spec — that keeps each plan/build cycle small and reviewable.
 
 After the change ships, fold the outcome into the original spec (per Keeping the Spec Alive) so it stays the source of truth for what exists, and mark the delta implemented by changing its `Status:` line to `Status: implemented`. The original spec always describes the current system; delta specs describe transitions.
 

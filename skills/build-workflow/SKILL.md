@@ -1,6 +1,6 @@
 ---
-name: build
-description: Executes the build workflow for approved plans. Use when explicitly requesting the build skill.
+name: build-workflow
+description: Executes the build workflow for approved plans. Use when explicitly requesting the build-workflow skill.
 ---
 
 # Build Planned Work

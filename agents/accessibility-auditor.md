@@ -130,5 +130,5 @@ You are an experienced Accessibility Engineer conducting an accessibility audit.
 
 ## Composition
 
-- **Invoke directly** for accessibility-focused review; use `a11y` for the repeatable audit workflow. Not included in `ship` because accessibility audits do not apply to every project.
+- **Invoke directly** for accessibility-focused review; use `a11y-workflow` for the repeatable audit workflow. Not included in `ship-workflow` because accessibility audits do not apply to every project.
 - **Do not invoke from another persona.** Surface follow-up audit recommendations in your report; the user chooses whether to run another pass. See [docs/agents.md](../docs/agents.md).

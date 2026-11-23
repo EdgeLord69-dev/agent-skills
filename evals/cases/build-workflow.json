@@ -1,0 +1,15 @@
+{
+  "skill_name": "build-workflow",
+  "trigger": {
+    "positive": [
+      { "prompt": "Invoke `/build-workflow`.", "top_k": 1 },
+      { "prompt": "Use the `build-workflow` skill.", "top_k": 1 },
+      { "prompt": "Run the short `build-workflow` workflow.", "top_k": 1 }
+    ],
+    "negative": [
+      { "prompt": "Run `/plan-workflow` for this spec.", "owner": "plan-workflow" },
+      { "prompt": "Run `/review-workflow` for these changes.", "owner": "review-workflow" }
+    ]
+  },
+  "evals": [{ "id": 1, "kind": "dialogue", "prompt": "Run `/build-workflow` for the plan.", "expected_output": "An approved, test-driven implementation of the full plan", "expectations": ["Requires a matching spec and plan and obtains approval before implementation", "Executes all approved tasks in dependency order with test-first verification and task-scoped commits", "Stops for failures, unresolved decisions, or high-risk work"] }]
+}

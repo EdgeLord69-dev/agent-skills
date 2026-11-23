@@ -24,7 +24,7 @@ Apply this skill when:
 - An agent is producing volume nobody is reading line by line
 - CI has checks but nobody can say which ones block a merge and which ones are decoration
 - Coverage, performance, or accessibility numbers get argued about per-PR instead of decided once
-- You're about to run `/build` or any autonomous loop, and the only thing standing between it and main is a test suite the agent also wrote
+- You're about to run `/build-workflow` or any autonomous loop, and the only thing standing between it and main is a test suite the agent also wrote
 
 **When NOT to use:**
 
@@ -196,10 +196,10 @@ The single biggest mistake is running everything everywhere. A check that stalls
 
 | Phase | Command | What runs | Budget |
 |-------|---------|-----------|--------|
-| BUILD | `/build` | Types, lint, secrets, the floor | under 5s, changed file only |
-| VERIFY | `/test` | Related tests, coverage on changed lines | under 90s |
-| REVIEW | `/review` | Everything, plus the guards below | minutes |
-| SHIP | `/ship` | Direction checks, no regressions | CI |
+| BUILD | `/build-workflow` | Types, lint, secrets, the floor | under 5s, changed file only |
+| VERIFY | `/test-workflow` | Related tests, coverage on changed lines | under 90s |
+| REVIEW | `/review-workflow` | Everything, plus the guards below | minutes |
+| SHIP | `/ship-workflow` | Direction checks, no regressions | CI |
 
 Two rules that keep this tolerable:
 

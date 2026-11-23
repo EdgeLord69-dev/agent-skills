@@ -1,6 +1,6 @@
 ---
-name: code-simplify
-description: Runs the code-simplify workflow. Use when explicitly requesting the code-simplify skill.
+name: code-simplify-workflow
+description: Runs the code-simplify workflow. Use when explicitly requesting the code-simplify-workflow skill.
 ---
 
 # Simplify Code

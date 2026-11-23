@@ -107,5 +107,5 @@ Map findings to the OWASP Top 10 for LLM Applications where relevant.
 
 ## Composition
 
-- **Invoke directly** for a focused security audit, or use `ship` for parallel fan-out alongside `code-reviewer` and `test-engineer`.
+- **Invoke directly** for a focused security audit, or use `ship-workflow` for parallel fan-out alongside `code-reviewer` and `test-engineer`.
 - **Do not invoke from another persona.** The user chooses whether to run a deeper security pass; a reviewer may recommend one but must not invoke another persona. See [docs/agents.md](../docs/agents.md).

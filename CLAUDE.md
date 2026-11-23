@@ -10,7 +10,7 @@ This is the agent-skills project — a collection of production-grade engineerin
 skills/       → Core skills (SKILL.md per directory)
 agents/       → Reusable agent personas (code-reviewer, test-engineer, security-auditor, web-performance-auditor, accessibility-auditor)
 hooks/        → Session lifecycle hooks
-Workflow skills in `skills/` cover spec, plan, build, test, review, ship, constraints, code simplification, web performance, and accessibility. Host-specific invocation syntax varies; don't assume every host exposes slash commands.
+Workflow skills in `skills/` are `spec-workflow`, `plan-workflow`, `build-workflow`, `test-workflow`, `review-workflow`, `ship-workflow`, `constraints-workflow`, `code-simplify-workflow`, `webperf-workflow`, and `a11y-workflow`. Host-specific invocation syntax varies; don't assume every host exposes slash commands.
 references/   → Supplementary checklists (testing, performance, security, accessibility, observability)
 evals/        → Skill eval cases + framework (see evals/README.md)
 docs/         → Setup guides for different tools
